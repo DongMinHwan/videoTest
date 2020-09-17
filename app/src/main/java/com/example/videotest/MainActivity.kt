@@ -1,49 +1,35 @@
 package com.example.videotest
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.widget.AdapterView
 import android.widget.MediaController
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.videolist.view.*
 
 class MainActivity : AppCompatActivity() {
 
-    var vv: VideoView? = null
+    var videolist = arrayListOf<video>(
+        video("영상1","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"),
+        video("영상2","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var vv = findViewById<VideoView>(R.id.videoView)
-        //URI 로 영상재생
-        //var videoUri = Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
-        //자신의 pc의 저장되있는 영상재생
-        var videoUri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.dog)
-        //vv.setMediaController(MediaController(this))
-        vv.setMediaController(MediaController(this))
-        vv.setVideoURI(videoUri)
+        mainListView.adapter = videoAdapter(this,videolist)
+     //   mainListView.onItemClickListener = AdapterView.OnItemClickListener{}
+        mainListView.onItemClickListener = AdapterView.OnItemClickListener{ parent, view, position, id ->
+            var intent = Intent(this, videoActivity::class.java)
 
-        vv.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-            fun onPrepared(mediaPlayer: MediaPlayer) {
+            intent.putExtra("video",view.videoadress.getText().toString())
 
-                vv.start()
-            }
-        })
-
+            startActivity(intent)
+        }
+        }
     }
-    override fun onPause() {
-        super.onPause()
-
-        //비디오 일시 정지
-        if (vv != null && vv!!.isPlaying) vv!!.pause()
-    }
-
-    //액티비티가 메모리에서 사라질때..
-    override fun onDestroy() {
-        super.onDestroy()
-        //
-        if (vv != null) vv!!.stopPlayback()
-    }
-
-}
 
