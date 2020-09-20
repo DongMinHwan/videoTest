@@ -14,9 +14,11 @@ import kotlinx.android.synthetic.main.videolist.view.*
 class MainActivity : AppCompatActivity() {
 
     var videolist = arrayListOf<video>(
+
         video("영상1","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"),
         video("영상2","http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +31,8 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("video",view.videoadress.getText().toString())
 
             startActivity(intent)
-        }
+         }
+
         }
     }
 

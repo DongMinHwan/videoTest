@@ -27,7 +27,6 @@ class videoActivity  : AppCompatActivity() {
             vv.start()
         }
 
-
 //          vv.setOnPreparedListener(MediaPlayer.OnPreparedListener {
 //                fun onPrepared(mediaPlayer: MediaPlayer) {
 //                    vv.start()
